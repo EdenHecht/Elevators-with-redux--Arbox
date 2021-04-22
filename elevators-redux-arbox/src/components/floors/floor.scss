@@ -1,0 +1,36 @@
+.floor-row {
+  .elevator-cell {
+    width: 90px;
+    height: 50px;
+    background: white;
+  }
+
+  .floor-name {
+    padding-right: 15px;
+    font-weight: bold;
+    text-align: right;
+    font-size: 0.8rem;
+  }
+
+  .floor-button {
+    margin-left: 15px;
+    border: none;
+    background: #6fd088;
+    border-radius: 5px;
+    color: white;
+    width: 80px;
+    height: 27px;
+    box-shadow: 1px 1px 3px #afafaf;
+    cursor: pointer;
+  }
+
+  .waiting {
+    background: red;
+  }
+
+  .arrived {
+    background: transparent;
+    border: 1px solid #6fd088;
+    color: #6fd088;
+  }
+}
