@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./floor.scss";
-import { getFloorName } from "../../services/utils";
+import { getFloorName } from "../../services/logic/utils";
 import Elevator from "../elevators/Elevator";
-import { handleElevatorCall } from "../../redux/actions";
+import { addCallToQueue } from "../../redux/actions";
 
 const Floor = (props) => {
   const { floorNumber } = props;
@@ -49,7 +49,7 @@ const Floor = (props) => {
 
   const handleBtnClick = () => {
     setIsWaiting(true);
-    dispatch(handleElevatorCall(floorInfo.floorNumber));
+    dispatch(addCallToQueue(floorInfo.floorNumber));
   };
 
   return (

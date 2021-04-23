@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./elevator.scss";
 import { handleElevatorArrived, handleDelayOver } from "../../redux/actions";
+import ding from "../../services/assets/elevator-ding.mp3";
+
+const sound = new Audio(ding);
 
 const Elevator = (props) => {
   const { elevatorNumber } = props;
@@ -14,10 +17,11 @@ const Elevator = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (elevatorInfo.isMoving) {
+    if (elevatorInfo.isMoving && elevatorInfo.startTime) {
       setFillColor("#ff2c0a");
       const yLength = elevatorInfo.nextFloor * -53 - elevatorInfo.nextFloor; //pixels calculation
-      const duration = 0.8 * elevatorInfo.nextFloor;
+      const duration =
+        0.8 * Math.abs(elevatorInfo.nextFloor - elevatorInfo.currentFloor);
 
       setanimationStyle({
         transform: `translateY(${yLength}px)`,
@@ -25,9 +29,7 @@ const Elevator = (props) => {
         animationTimingFunction: "linear",
       });
 
-      setTimeout(() => {
-        handleAnimationEnd();
-      }, duration * 1000);
+      setTimeout(handleAnimationEnd, duration * 1000);
     }
   }, [elevatorInfo]);
 
@@ -35,10 +37,10 @@ const Elevator = (props) => {
     isHalting ? setFillColor("#6fd088") : setFillColor("#000000");
   }, [isHalting]);
 
-  //fires twice- why ??
   const handleAnimationEnd = () => {
-    dispatch(handleElevatorArrived(elevatorInfo.nextFloor, elevatorNumber));
+    sound.play();
     setIsHalting(true);
+    dispatch(handleElevatorArrived(elevatorInfo.nextFloor, elevatorNumber));
     setTimeout(() => {
       dispatch(handleDelayOver(elevatorInfo.nextFloor, elevatorNumber));
       setIsHalting(false);

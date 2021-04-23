@@ -15,7 +15,7 @@ const Building = () => {
 
   useEffect(() => {
     if (callQueue.length) {
-      callQueue.map((floorNum) => dispatch(handleElevatorCall(floorNum)));
+      dispatch(handleElevatorCall(callQueue[0]));
     }
   }, [callQueue]);
 

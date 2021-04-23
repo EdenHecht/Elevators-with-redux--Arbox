@@ -1,5 +1,6 @@
 import {
   INITIALIZATION,
+  ADD_CALL_TO_QUEUE,
   ELEVATOR_CALL,
   ELEVATOR_ARRIVED,
   DELAY_OVER,
@@ -8,6 +9,13 @@ import {
 export const initBaseComponents = () => {
   return {
     type: INITIALIZATION,
+  };
+};
+
+export const addCallToQueue = (floorNumber) => {
+  return {
+    type: ADD_CALL_TO_QUEUE,
+    payload: floorNumber,
   };
 };
 
