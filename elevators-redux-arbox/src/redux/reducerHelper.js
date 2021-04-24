@@ -4,12 +4,8 @@ import {
   updateElevatorCalled,
   updateElevatorArrived,
 } from "../services/logic/elevatorLogic";
-import {
-  createFloors,
-  updateFloor,
-  initWatches,
-  toggleWatch,
-} from "../services/logic/floorsLogic";
+import { createFloors, updateFloor } from "../services/logic/floorsLogic";
+import { initWatches, toggleWatch } from "../services/logic/watchesLogic";
 import {
   WAITING,
   NOT_WAITING,

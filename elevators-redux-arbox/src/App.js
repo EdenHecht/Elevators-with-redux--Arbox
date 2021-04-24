@@ -8,7 +8,6 @@ function App() {
     <Provider store={store}>
       <div className="App">
         <p className="header">Elevator Exercise</p>
-
         <Home />
       </div>
     </Provider>

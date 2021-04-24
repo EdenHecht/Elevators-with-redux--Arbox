@@ -1,3 +1,5 @@
+import Elevator from "../../components/elevators/Elevator";
+
 export const createElevators = (numOfElevators) => {
   let elevators = {};
   for (let i = 0; i < numOfElevators; i++) {
@@ -9,6 +11,20 @@ export const createElevators = (numOfElevators) => {
     };
   }
   return elevators;
+};
+
+export const createElevatorShaft = (numOfElevators, floorNumber) => {
+  let elevatorShaft = [];
+  for (let i = 0; i < numOfElevators; i++) {
+    elevatorShaft.push(
+      <td key={`floor-${floorNumber}-elevator-${i}`} className="elevator-cell">
+        {!floorNumber && (
+          <Elevator key={`floor-${floorNumber}--${i}`} elevatorNumber={i} />
+        )}
+      </td>
+    );
+  }
+  return elevatorShaft;
 };
 
 export const findClosestElevator = (floorNumber, elevators) => {
@@ -31,7 +47,7 @@ export const updateElevatorCalled = (
   floorNumber,
   closestElevator
 ) => {
-  let updatedElevator = JSON.parse(JSON.stringify(closestElevator)); //deep clone
+  let updatedElevator = JSON.parse(JSON.stringify(closestElevator));
   updatedElevator.nextFloor = floorNumber;
   updatedElevator.isMoving = true;
   elevatorsCopy[closestElevator.elevatorNumber] = updatedElevator;

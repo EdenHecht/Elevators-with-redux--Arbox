@@ -17,10 +17,8 @@ const StopWatch = (props) => {
   }, [startStopWatch, seconds]);
 
   useEffect(() => {
-    if (!startStopWatch) {
-      setMinutes(0);
-      setSeconds(1);
-    }
+    setMinutes(0);
+    setSeconds(1);
   }, [startStopWatch]);
 
   return (

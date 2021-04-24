@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./floor.scss";
 import { getFloorName } from "../../services/logic/utils";
-import Elevator from "../elevators/Elevator";
+import { createElevatorShaft } from "../../services/logic/elevatorLogic";
 import { addCallToQueue } from "../../redux/actions";
 import StopWatch from "../stopwatch/StopWatch";
 
@@ -15,11 +15,12 @@ const Floor = (props) => {
   const [isWaiting, setIsWaiting] = useState(floorInfo.isWaiting);
   const [isArrived, setIsArrived] = useState(floorInfo.isArrived);
   const [btnText, setBtnText] = useState("Call");
-  const [base, setbase] = useState([]);
+  const [basePositions, setBasePositions] = useState([]);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setbase(createElevatorShaft());
+    setBasePositions(createElevatorShaft(numOfElevators, floorNumber));
   }, [watchStart]);
 
   useEffect(() => {
@@ -32,32 +33,15 @@ const Floor = (props) => {
     setBtnText(text);
   }, [isWaiting, isArrived]);
 
-  const createElevatorShaft = () => {
-    let elevatorShaft = [];
-    for (let i = 0; i < numOfElevators; i++) {
-      elevatorShaft.push(
-        <td
-          key={`floor-${floorNumber}-elevator-${i}`}
-          className="elevator-cell"
-        >
-          {!floorNumber && (
-            <Elevator key={`floor-${floorNumber}--${i}`} elevatorNumber={i} />
-          )}
-        </td>
-      );
-    }
-    return elevatorShaft;
-  };
-
   const handleBtnClick = () => {
     setIsWaiting(true);
-    dispatch(addCallToQueue(floorInfo.floorNumber));
+    dispatch(addCallToQueue(floorNumber));
   };
 
   return (
     <tr className="floor-row">
-      <td className="floor-name">{getFloorName(floorInfo.floorNumber)}</td>
-      {base}
+      <td className="floor-name">{getFloorName(floorNumber)}</td>
+      {basePositions}
       <td>
         <button
           className={`floor-button 

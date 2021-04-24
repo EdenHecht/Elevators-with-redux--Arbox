@@ -9,6 +9,7 @@ const Settings = () => {
 
   const [numOfElevators, setNumOfElevators] = useState(numOfElevatorsInit);
   const [numOfFloors, setNumOfFloors] = useState(numOfFloorsInit);
+
   const dispatch = useDispatch();
 
   return (

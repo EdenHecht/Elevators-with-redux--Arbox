@@ -11,9 +11,11 @@ const Elevator = (props) => {
   const { elevatorNumber } = props;
   const elevatorInfo = useSelector((state) => state.elevators[elevatorNumber]);
   const startWatch = useSelector((state) => state.startWatch);
+
   const [animationStyle, setanimationStyle] = useState({});
   const [fillColor, setFillColor] = useState("#000000");
   const [isHalting, setIsHalting] = useState(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,6 +43,7 @@ const Elevator = (props) => {
     sound.play();
     setIsHalting(true);
     dispatch(handleElevatorArrived(elevatorInfo.nextFloor, elevatorNumber));
+
     setTimeout(() => {
       dispatch(handleDelayOver(elevatorInfo.nextFloor, elevatorNumber));
       setIsHalting(false);
