@@ -4,24 +4,43 @@ import {
   updateElevatorCalled,
   updateElevatorArrived,
 } from "../services/logic/elevatorLogic";
-import { createFloors, updateFloor } from "../services/logic/floorsLogic";
-import { WAITING, NOT_WAITING, ARRIVED } from "../services/constants/types";
+import {
+  createFloors,
+  updateFloor,
+  initWatches,
+  toggleWatch,
+} from "../services/logic/floorsLogic";
+import {
+  WAITING,
+  NOT_WAITING,
+  ARRIVED,
+  START,
+  STOP,
+} from "../services/constants/types";
 
 export const handleInit = (state) => {
   const elevators = createElevators(state.numOfElevators);
   const floors = createFloors(state.numOfFloors);
+  const watches = initWatches(state.numOfFloors);
   return {
     ...state,
     elevators: elevators,
     floors: floors,
+    startWatch: watches,
   };
 };
 
 export const handleAddCallToQueue = (state, action) => {
   const floorNumber = action.payload;
+  const updatedWatches = toggleWatch(
+    { ...state.startWatch },
+    floorNumber,
+    START
+  );
   return {
     ...state,
     callQueue: [...state.callQueue, floorNumber],
+    startWatch: updatedWatches,
   };
 };
 
@@ -51,6 +70,7 @@ export const handleElevatorCall = (state, action) => {
       floorNumber,
       WAITING
     );
+
     return {
       ...state,
       elevators: updatedElevators,
@@ -63,6 +83,11 @@ export const handleElevatorCall = (state, action) => {
 export const handleElevatorArrived = (state, action) => {
   const floorNumber = action.payload.floorNumber;
   const elevatorNumber = action.payload.elevatorNumber;
+  const updatedWatches = toggleWatch(
+    { ...state.startWatch },
+    floorNumber,
+    STOP
+  );
   const updatedFloors = updateFloor(
     { ...state.floors },
     floorNumber,
@@ -78,6 +103,7 @@ export const handleElevatorArrived = (state, action) => {
     ...state,
     elevators: updatedElevators,
     floors: updatedFloors,
+    startWatch: updatedWatches,
   };
 };
 

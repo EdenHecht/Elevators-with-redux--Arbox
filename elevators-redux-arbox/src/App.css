@@ -4,4 +4,11 @@ body {
   height: 100vh;
   background: #eaeaea;
   font-size: 10px;
+  text-align: center;
+}
+.header {
+  font-weight: bold;
+  margin: 0;
+  padding: 2em 0;
+  font-size: 1.2rem;
 }

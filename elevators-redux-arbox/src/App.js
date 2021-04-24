@@ -1,13 +1,15 @@
 import "./App.css";
 import { Provider } from "react-redux";
-import Building from "./components/building/Building";
 import store from "./redux/store";
+import Home from "./components/home/Home";
 
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <Building />
+        <p className="header">Elevator Exercise</p>
+
+        <Home />
       </div>
     </Provider>
   );

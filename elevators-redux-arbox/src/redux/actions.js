@@ -1,10 +1,18 @@
 import {
   INITIALIZATION,
+  SETTINGS,
   ADD_CALL_TO_QUEUE,
   ELEVATOR_CALL,
   ELEVATOR_ARRIVED,
   DELAY_OVER,
 } from "./actionTypes";
+
+export const initSettings = (numOfElevators, numOfFloors) => {
+  return {
+    type: SETTINGS,
+    payload: { numOfElevators, numOfFloors },
+  };
+};
 
 export const initBaseComponents = () => {
   return {

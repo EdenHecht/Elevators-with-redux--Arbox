@@ -6,7 +6,6 @@ export const createElevators = (numOfElevators) => {
       currentFloor: 0,
       nextFloor: 0,
       isMoving: false,
-      startTime: null,
     };
   }
   return elevators;
@@ -35,7 +34,6 @@ export const updateElevatorCalled = (
   let updatedElevator = JSON.parse(JSON.stringify(closestElevator)); //deep clone
   updatedElevator.nextFloor = floorNumber;
   updatedElevator.isMoving = true;
-  updatedElevator.startTime = performance.now();
   elevatorsCopy[closestElevator.elevatorNumber] = updatedElevator;
 
   return elevatorsCopy;
@@ -51,7 +49,6 @@ export const updateElevatorArrived = (
   );
   updatedElevator.nextFloor = floorNumber;
   updatedElevator.currentFloor = floorNumber;
-  updatedElevator.startTime = null;
   elevatorsCopy[elevatorNumber] = updatedElevator;
   return elevatorsCopy;
 };

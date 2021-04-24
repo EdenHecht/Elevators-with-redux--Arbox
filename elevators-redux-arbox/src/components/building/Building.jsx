@@ -21,13 +21,12 @@ const Building = () => {
 
   return (
     <div className="building-container">
-      <p className="header">Elevator Exercise</p>
       <table className="building-table">
         <tbody>
           {Object.keys(floors)
             .map((key) => floors[key])
             .sort((floor1, floor2) => floor2.floorNumber - floor1.floorNumber)
-            .map((floor) => (
+            .map((floor, i) => (
               <Floor
                 key={`floor-${floor.floorNumber}`}
                 floorNumber={floor.floorNumber}

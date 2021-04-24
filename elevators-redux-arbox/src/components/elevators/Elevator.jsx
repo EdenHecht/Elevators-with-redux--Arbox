@@ -10,14 +10,14 @@ const sound = new Audio(ding);
 const Elevator = (props) => {
   const { elevatorNumber } = props;
   const elevatorInfo = useSelector((state) => state.elevators[elevatorNumber]);
-
+  const startWatch = useSelector((state) => state.startWatch);
   const [animationStyle, setanimationStyle] = useState({});
   const [fillColor, setFillColor] = useState("#000000");
   const [isHalting, setIsHalting] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (elevatorInfo.isMoving && elevatorInfo.startTime) {
+    if (elevatorInfo.isMoving && startWatch[elevatorInfo.nextFloor]) {
       setFillColor("#ff2c0a");
       const yLength = elevatorInfo.nextFloor * -53 - elevatorInfo.nextFloor; //pixels calculation
       const duration =

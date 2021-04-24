@@ -4,11 +4,13 @@ import "./floor.scss";
 import { getFloorName } from "../../services/logic/utils";
 import Elevator from "../elevators/Elevator";
 import { addCallToQueue } from "../../redux/actions";
+import StopWatch from "../stopwatch/StopWatch";
 
 const Floor = (props) => {
   const { floorNumber } = props;
   const numOfElevators = useSelector((state) => state.numOfElevators);
   const floorInfo = useSelector((state) => state.floors[floorNumber]);
+  const watchStart = useSelector((state) => state.startWatch[floorNumber]);
 
   const [isWaiting, setIsWaiting] = useState(floorInfo.isWaiting);
   const [isArrived, setIsArrived] = useState(floorInfo.isArrived);
@@ -18,7 +20,7 @@ const Floor = (props) => {
 
   useEffect(() => {
     setbase(createElevatorShaft());
-  }, []);
+  }, [watchStart]);
 
   useEffect(() => {
     setIsWaiting(floorInfo.isWaiting);
@@ -67,6 +69,7 @@ const Floor = (props) => {
           {btnText}
         </button>
       </td>
+      <td className="watch">{<StopWatch startStopWatch={watchStart} />}</td>
     </tr>
   );
 };

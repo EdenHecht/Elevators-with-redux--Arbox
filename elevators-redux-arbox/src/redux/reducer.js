@@ -1,4 +1,5 @@
 import {
+  SETTINGS,
   INITIALIZATION,
   ADD_CALL_TO_QUEUE,
   ELEVATOR_CALL,
@@ -14,15 +15,25 @@ import {
 } from "./reducerHelper";
 
 const initialState = {
+  isSet: false,
   elevators: {},
   floors: {},
   callQueue: [],
+  startWatch: {},
   numOfFloors: 10,
   numOfElevators: 5,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case SETTINGS:
+      return {
+        ...state,
+        isSet: true,
+        numOfFloors: action.payload.numOfFloors,
+        numOfElevators: action.payload.numOfElevators,
+      };
+
     case INITIALIZATION:
       return handleInit(state);
 
