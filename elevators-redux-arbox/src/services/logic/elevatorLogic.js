@@ -1,4 +1,5 @@
 import Elevator from "../../components/elevators/Elevator";
+import StopWatch from "../../components/stopwatch/StopWatch";
 
 export const createElevators = (numOfElevators) => {
   let elevators = {};
@@ -13,7 +14,11 @@ export const createElevators = (numOfElevators) => {
   return elevators;
 };
 
-export const createElevatorShaft = (numOfElevators, floorNumber) => {
+export const createElevatorShaft = (
+  numOfElevators,
+  floorNumber,
+  watchStart
+) => {
   let elevatorShaft = [];
   for (let i = 0; i < numOfElevators; i++) {
     elevatorShaft.push(
@@ -21,6 +26,9 @@ export const createElevatorShaft = (numOfElevators, floorNumber) => {
         {!floorNumber && (
           <Elevator key={`floor-${floorNumber}--${i}`} elevatorNumber={i} />
         )}
+        {watchStart.elevatorNumber === i ? (
+          <StopWatch floorNumber={floorNumber} />
+        ) : null}
       </td>
     );
   }

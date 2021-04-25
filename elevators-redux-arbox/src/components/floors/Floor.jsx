@@ -5,6 +5,7 @@ import { getFloorName } from "../../services/logic/utils";
 import { createElevatorShaft } from "../../services/logic/elevatorLogic";
 import { addCallToQueue } from "../../redux/actions";
 import StopWatch from "../stopwatch/StopWatch";
+import { NO_ELEVATOR_ASSIGNED } from "../../services/constants/types";
 
 const Floor = (props) => {
   const { floorNumber } = props;
@@ -20,13 +21,18 @@ const Floor = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setBasePositions(createElevatorShaft(numOfElevators, floorNumber));
-  }, [watchStart]);
+    setBasePositions(
+      createElevatorShaft(numOfElevators, floorNumber, watchStart)
+    );
+  }, []);
 
   useEffect(() => {
     setIsWaiting(floorInfo.isWaiting);
     setIsArrived(floorInfo.isArrived);
-  }, [floorInfo]);
+    setBasePositions(
+      createElevatorShaft(numOfElevators, floorNumber, watchStart)
+    );
+  }, [floorInfo, watchStart]);
 
   useEffect(() => {
     const text = isWaiting ? "Waiting" : isArrived ? "Arrived" : "Call";
@@ -53,7 +59,10 @@ const Floor = (props) => {
           {btnText}
         </button>
       </td>
-      <td className="watch">{<StopWatch startStopWatch={watchStart} />}</td>
+      <td className="watch">
+        {watchStart.elevatorNumber === NO_ELEVATOR_ASSIGNED &&
+          watchStart.start && <StopWatch floorNumber={floorNumber} />}
+      </td>
     </tr>
   );
 };

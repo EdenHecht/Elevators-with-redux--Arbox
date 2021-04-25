@@ -7,11 +7,13 @@ import {
 import { createFloors, updateFloor } from "../services/logic/floorsLogic";
 import { initWatches, toggleWatch } from "../services/logic/watchesLogic";
 import {
-  WAITING,
-  NOT_WAITING,
-  ARRIVED,
-  START,
-  STOP,
+  WAITING, // true
+  NOT_WAITING, // false
+  ARRIVED, // true
+  START, // true
+  STOP, // false
+  PICKUP_DEFAULT, // 0
+  TIMER_DEFAULT, // null
 } from "../services/constants/types";
 
 export const handleInit = (state) => {
@@ -31,12 +33,20 @@ export const handleAddCallToQueue = (state, action) => {
   const updatedWatches = toggleWatch(
     { ...state.startWatch },
     floorNumber,
-    START
+    START,
+    PICKUP_DEFAULT
+  );
+  const updatedFloors = updateFloor(
+    { ...state.floors },
+    floorNumber,
+    WAITING,
+    performance.now()
   );
   return {
     ...state,
     callQueue: [...state.callQueue, floorNumber],
     startWatch: updatedWatches,
+    floors: updatedFloors,
   };
 };
 
@@ -61,17 +71,23 @@ export const handleElevatorCall = (state, action) => {
       floorNumber,
       closestElevator
     );
-    const updatedFloors = updateFloor(
-      { ...state.floors },
+
+    const timer = Math.round(
+      (performance.now() - state.floors[floorNumber].timer) / 1000
+    );
+    const updatedWatches = toggleWatch(
+      { ...state.startWatch },
       floorNumber,
-      WAITING
+      START,
+      timer,
+      closestElevator.elevatorNumber
     );
 
     return {
       ...state,
       elevators: updatedElevators,
-      floors: updatedFloors,
       callQueue: updatedQueue,
+      startWatch: updatedWatches,
     };
   }
 };
@@ -82,12 +98,14 @@ export const handleElevatorArrived = (state, action) => {
   const updatedWatches = toggleWatch(
     { ...state.startWatch },
     floorNumber,
-    STOP
+    STOP,
+    PICKUP_DEFAULT
   );
   const updatedFloors = updateFloor(
     { ...state.floors },
     floorNumber,
     NOT_WAITING,
+    TIMER_DEFAULT,
     ARRIVED
   );
   const updatedElevators = updateElevatorArrived(

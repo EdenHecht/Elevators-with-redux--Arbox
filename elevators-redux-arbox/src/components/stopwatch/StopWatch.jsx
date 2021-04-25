@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const StopWatch = (props) => {
-  const { startStopWatch } = props;
+  const { floorNumber } = props;
+  const initTime = useSelector(
+    (state) => state.startWatch[floorNumber].pickUpTime
+  );
+
   const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-  useEffect(() => {
-    if (startStopWatch)
-      setTimeout(() => {
-        setMinutes(minutes + 1);
-        setSeconds(0);
-      }, 60000);
-  }, [startStopWatch, minutes]);
+  const [seconds, setSeconds] = useState(initTime);
 
   useEffect(() => {
-    if (startStopWatch) setTimeout(() => setSeconds(seconds + 1), 1000);
-  }, [startStopWatch, seconds]);
+    setTimeout(() => {
+      setMinutes(minutes + 1);
+      setSeconds(0);
+    }, 60000);
+  }, [minutes]);
 
   useEffect(() => {
-    setMinutes(0);
-    setSeconds(0);
-  }, [startStopWatch]);
+    setTimeout(() => setSeconds(seconds + 1), 1000);
+  }, [seconds]);
 
   return (
     <>
-      {startStopWatch ? (
-        <div>
-          {minutes ? `${minutes}min,` : null}
-          {`${seconds}sec`}
-        </div>
-      ) : null}
+      <div>
+        {minutes ? `${minutes}min,` : null}
+        {`${seconds}sec`}
+      </div>
     </>
   );
 };

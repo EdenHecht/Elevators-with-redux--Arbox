@@ -19,7 +19,7 @@ const Elevator = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (elevatorInfo.isMoving && startWatch[elevatorInfo.nextFloor]) {
+    if (elevatorInfo.isMoving && startWatch[elevatorInfo.nextFloor].start) {
       setFillColor("#ff2c0a");
       const yLength = elevatorInfo.nextFloor * -53 - elevatorInfo.nextFloor; //pixels calculation
       const duration =

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { initSettings } from "../../redux/actions";
 import "./setting.scss";
+import "../home/home.css";
 
 const Settings = () => {
   const numOfFloorsInit = useSelector((state) => state.numOfFloors);
@@ -29,7 +30,7 @@ const Settings = () => {
         onChange={(e) => setNumOfElevators(Number(e.target.value))}
       />
       <button
-        className="btn"
+        className="settings-btn"
         type="submit"
         onClick={() => dispatch(initSettings(numOfElevators, numOfFloors))}
       >

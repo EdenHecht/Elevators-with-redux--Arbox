@@ -1,6 +1,7 @@
 import {
   INITIALIZATION,
   SETTINGS,
+  RESET_SETTINGS,
   ADD_CALL_TO_QUEUE,
   ELEVATOR_CALL,
   ELEVATOR_ARRIVED,
@@ -17,6 +18,12 @@ export const initSettings = (numOfElevators, numOfFloors) => {
 export const initBaseComponents = () => {
   return {
     type: INITIALIZATION,
+  };
+};
+
+export const resetSettings = () => {
+  return {
+    type: RESET_SETTINGS,
   };
 };
 

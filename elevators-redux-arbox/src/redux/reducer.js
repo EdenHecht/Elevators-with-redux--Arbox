@@ -1,6 +1,7 @@
 import {
   SETTINGS,
   INITIALIZATION,
+  RESET_SETTINGS,
   ADD_CALL_TO_QUEUE,
   ELEVATOR_CALL,
   ELEVATOR_ARRIVED,
@@ -19,7 +20,7 @@ const initialState = {
   elevators: {},
   floors: {},
   callQueue: [],
-  startWatch: {},
+  startWatch: [],
   numOfFloors: 10,
   numOfElevators: 5,
 };
@@ -32,6 +33,11 @@ const reducer = (state = initialState, action) => {
         isSet: true,
         numOfFloors: action.payload.numOfFloors,
         numOfElevators: action.payload.numOfElevators,
+      };
+
+    case RESET_SETTINGS:
+      return {
+        ...initialState,
       };
 
     case INITIALIZATION:

@@ -1,0 +1,9 @@
+.settings-btn {
+  background: #5da06f;
+  color: white;
+  outline: none;
+  border: none;
+  width: 5rem;
+  border-radius: 15px;
+  cursor: pointer;
+}
