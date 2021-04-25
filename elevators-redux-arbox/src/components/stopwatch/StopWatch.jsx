@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const StopWatch = (props) => {
   const { startStopWatch } = props;
   const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(1);
+  const [seconds, setSeconds] = useState(0);
   useEffect(() => {
     if (startStopWatch)
       setTimeout(() => {
@@ -18,7 +18,7 @@ const StopWatch = (props) => {
 
   useEffect(() => {
     setMinutes(0);
-    setSeconds(1);
+    setSeconds(0);
   }, [startStopWatch]);
 
   return (
@@ -26,7 +26,7 @@ const StopWatch = (props) => {
       {startStopWatch ? (
         <div>
           {minutes ? `${minutes}min,` : null}
-          {seconds ? `${seconds}sec` : null}
+          {`${seconds}sec`}
         </div>
       ) : null}
     </>
